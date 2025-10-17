@@ -8,27 +8,26 @@ function MessageInput() {
   const { playRandomKeyStrokeSound } = useKeyboardSound();
   const [text, setText] = useState("");
   const [imagePreview, setImagePreview] = useState(null);
-
   const fileInputRef = useRef(null);
-
   const { sendMessage, isSoundEnabled } = useChatStore();
 
   const handleSendMessage = (e) => {
     e.preventDefault();
     if (!text.trim() && !imagePreview) return;
-    if (isSoundEnabled) playRandomKeyStrokeSound();
 
+    if (isSoundEnabled) playRandomKeyStrokeSound();
     sendMessage({
       text: text.trim(),
       image: imagePreview,
     });
+
     setText("");
     setImagePreview("");
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
+    const file = e.target.files;
     if (!file.type.startsWith("image/")) {
       toast.error("Please select an image file");
       return;
@@ -45,27 +44,27 @@ function MessageInput() {
   };
 
   return (
-    <div className="p-4 border-t border-slate-700/50">
+    <div className="p-3 sm:p-4 bg-slate-800/50 border-t border-slate-700/50">
       {imagePreview && (
-        <div className="max-w-3xl mx-auto mb-3 flex items-center">
-          <div className="relative">
-            <img
-              src={imagePreview}
-              alt="Preview"
-              className="w-20 h-20 object-cover rounded-lg border border-slate-700"
-            />
-            <button
-              onClick={removeImage}
-              className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-slate-800 flex items-center justify-center text-slate-200 hover:bg-slate-700"
-              type="button"
-            >
-              <XIcon className="w-4 h-4" />
-            </button>
-          </div>
+        <div className="mb-3 relative inline-block">
+          <img
+            src={imagePreview}
+            alt="Preview"
+            className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg border border-slate-700"
+          />
+          <button
+            onClick={removeImage}
+            className="absolute -top-2 -right-2 p-1 bg-red-500 rounded-full hover:bg-red-600 transition-colors"
+          >
+            <XIcon className="size-3 text-white" />
+          </button>
         </div>
       )}
 
-      <form onSubmit={handleSendMessage} className="max-w-3xl mx-auto flex space-x-4">
+      <form
+        onSubmit={handleSendMessage}
+        className="flex items-end gap-2 sm:gap-3"
+      >
         <input
           type="text"
           value={text}
@@ -73,7 +72,7 @@ function MessageInput() {
             setText(e.target.value);
             isSoundEnabled && playRandomKeyStrokeSound();
           }}
-          className="flex-1 bg-slate-800/50 border border-slate-700/50 rounded-lg py-2 px-4"
+          className="flex-1 bg-slate-800/50 border border-slate-700/50 rounded-lg py-2 sm:py-2.5 px-3 sm:px-4 text-slate-200 placeholder-slate-400 focus:ring-2 focus:ring-cyan-500 focus:border-transparent text-sm sm:text-base resize-none"
           placeholder="Type your message..."
         />
 
@@ -88,21 +87,21 @@ function MessageInput() {
         <button
           type="button"
           onClick={() => fileInputRef.current?.click()}
-          className={`bg-slate-800/50 text-slate-400 hover:text-slate-200 rounded-lg px-4 transition-colors ${
-            imagePreview ? "text-cyan-500" : ""
-          }`}
+          className="p-2 sm:p-2.5 bg-slate-700/50 hover:bg-slate-600/50 rounded-lg border border-slate-600/50 transition-colors"
         >
-          <ImageIcon className="w-5 h-5" />
+          <ImageIcon className="size-4 sm:size-5 text-slate-400" />
         </button>
+
         <button
           type="submit"
           disabled={!text.trim() && !imagePreview}
-          className="bg-gradient-to-r from-cyan-500 to-cyan-600 text-white rounded-lg px-4 py-2 font-medium hover:from-cyan-600 hover:to-cyan-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          className="p-2 sm:p-2.5 bg-cyan-500 hover:bg-cyan-600 disabled:bg-slate-700 disabled:text-slate-500 rounded-lg transition-colors"
         >
-          <SendIcon className="w-5 h-5" />
+          <SendIcon className="size-4 sm:size-5 text-white" />
         </button>
       </form>
     </div>
   );
 }
+
 export default MessageInput;
