@@ -37,11 +37,11 @@ function ChatContainer() {
   }, [messages]);
 
   return (
-    <div className="h-full flex flex-col min-h-0">
+    <div className="w-full h-full flex flex-col">
       <ChatHeader />
 
-      {/* Messages Area - Flexible height but constrained */}
-      <div className="flex-1 min-h-0 overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4">
+      {/* Messages Area - Scrollable on all devices */}
+      <div className="flex-1 overflow-y-auto p-4 sm:p-5 md:p-6 space-y-4 min-h-[300px] max-h-[400px] md:max-h-none">
         {messages.length > 0 && !isMessagesLoading ? (
           <>
             {messages.map((msg) => (
@@ -52,7 +52,7 @@ function ChatContainer() {
                 }`}
               >
                 <div
-                  className={`chat-bubble relative max-w-[85%] sm:max-w-[70%] text-sm break-words ${
+                  className={`chat-bubble relative max-w-[85%] sm:max-w-[75%] text-sm md:text-base break-words ${
                     msg.senderId === authUser._id
                       ? "bg-cyan-600 text-white"
                       : "bg-slate-800 text-slate-200"
@@ -89,8 +89,8 @@ function ChatContainer() {
         )}
       </div>
 
-      {/* Message Input - Always visible */}
-      <div className="flex-shrink-0">
+      {/* Message Input - Always visible at bottom */}
+      <div className="flex-shrink-0 mt-auto">
         <MessageInput />
       </div>
     </div>

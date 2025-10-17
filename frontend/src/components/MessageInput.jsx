@@ -27,7 +27,7 @@ function MessageInput() {
   };
 
   const handleImageChange = (e) => {
-    const file = e.target.files;
+    const file = e.target.files[0];
     if (!file.type.startsWith("image/")) {
       toast.error("Please select an image file");
       return;
@@ -44,37 +44,44 @@ function MessageInput() {
   };
 
   return (
-    <div className="p-3 sm:p-4 bg-slate-800/50 border-t border-slate-700/50">
+    <div className="bg-slate-800/50 border-t border-slate-700/50 p-4 sm:p-5 md:p-6">
+      {/* Image Preview */}
       {imagePreview && (
-        <div className="mb-3 relative inline-block">
-          <img
-            src={imagePreview}
-            alt="Preview"
-            className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg border border-slate-700"
-          />
-          <button
-            onClick={removeImage}
-            className="absolute -top-2 -right-2 p-1 bg-red-500 rounded-full hover:bg-red-600 transition-colors"
-          >
-            <XIcon className="size-3 text-white" />
-          </button>
+        <div className="mb-4">
+          <div className="relative inline-block">
+            <img
+              src={imagePreview}
+              alt="Preview"
+              className="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-lg border border-slate-700"
+            />
+            <button
+              onClick={removeImage}
+              className="absolute -top-2 -right-2 p-1 bg-red-500 rounded-full hover:bg-red-600 transition-colors"
+            >
+              <XIcon className="size-3 text-white" />
+            </button>
+          </div>
         </div>
       )}
 
+      {/* Input Form */}
       <form
         onSubmit={handleSendMessage}
-        className="flex items-end gap-2 sm:gap-3"
+        className="flex items-center gap-3 sm:gap-4"
       >
-        <input
-          type="text"
-          value={text}
-          onChange={(e) => {
-            setText(e.target.value);
-            isSoundEnabled && playRandomKeyStrokeSound();
-          }}
-          className="flex-1 bg-slate-800/50 border border-slate-700/50 rounded-lg py-2 sm:py-2.5 px-3 sm:px-4 text-slate-200 placeholder-slate-400 focus:ring-2 focus:ring-cyan-500 focus:border-transparent text-sm sm:text-base resize-none"
-          placeholder="Type your message..."
-        />
+        <div className="flex-1 relative">
+          <input
+            type="text"
+            value={text}
+            onChange={(e) => {
+              setText(e.target.value);
+              isSoundEnabled && playRandomKeyStrokeSound();
+            }}
+            className="w-full bg-slate-700/50 border border-slate-600/50 rounded-lg py-3 sm:py-4 px-4 sm:px-5 text-slate-200 placeholder-slate-400 focus:ring-2 focus:ring-cyan-500 focus:border-transparent text-base resize-none"
+            placeholder="Type your message..."
+            autoComplete="off"
+          />
+        </div>
 
         <input
           type="file"
@@ -84,20 +91,22 @@ function MessageInput() {
           className="hidden"
         />
 
+        {/* Image Button */}
         <button
           type="button"
           onClick={() => fileInputRef.current?.click()}
-          className="p-2 sm:p-2.5 bg-slate-700/50 hover:bg-slate-600/50 rounded-lg border border-slate-600/50 transition-colors"
+          className="flex-shrink-0 p-3 sm:p-4 bg-slate-700/50 hover:bg-slate-600/50 rounded-lg border border-slate-600/50 transition-colors"
         >
-          <ImageIcon className="size-4 sm:size-5 text-slate-400" />
+          <ImageIcon className="size-5 sm:size-6 text-slate-400" />
         </button>
 
+        {/* Send Button */}
         <button
           type="submit"
           disabled={!text.trim() && !imagePreview}
-          className="p-2 sm:p-2.5 bg-cyan-500 hover:bg-cyan-600 disabled:bg-slate-700 disabled:text-slate-500 rounded-lg transition-colors"
+          className="flex-shrink-0 p-3 sm:p-4 bg-cyan-500 hover:bg-cyan-600 disabled:bg-slate-700 disabled:text-slate-500 rounded-lg transition-colors"
         >
-          <SendIcon className="size-4 sm:size-5 text-white" />
+          <SendIcon className="size-5 sm:size-6 text-white" />
         </button>
       </form>
     </div>

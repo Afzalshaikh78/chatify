@@ -17,13 +17,13 @@ function App() {
   if (isCheckingAuth) return <PageLoader />;
 
   return (
-    <div className="h-screen w-screen bg-slate-900 relative flex items-center justify-center overflow-hidden">
+    <div className="min-h-screen md:h-screen w-screen bg-slate-900 relative flex items-center justify-center overflow-x-hidden overflow-y-auto md:overflow-hidden">
       {/* DECORATORS - GRID BG & GLOW SHAPES */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] pointer-events-none" />
       <div className="absolute top-0 left-0 size-80 lg:size-96 bg-pink-500 opacity-20 blur-[100px] pointer-events-none" />
       <div className="absolute bottom-0 right-0 size-80 lg:size-96 bg-cyan-500 opacity-20 blur-[100px] pointer-events-none" />
 
-      <div className="relative z-10 w-full h-full max-w-7xl mx-auto p-7 sm:p-4">
+      <div className="relative z-10 w-full min-h-screen md:h-full max-w-7xl mx-auto p-4 sm:p-6 flex items-center justify-center">
         <Routes>
           <Route
             path="/"
