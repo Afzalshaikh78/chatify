@@ -23,7 +23,7 @@ function App() {
       <div className="absolute top-0 left-0 size-80 lg:size-96 bg-pink-500 opacity-20 blur-[100px] pointer-events-none" />
       <div className="absolute bottom-0 right-0 size-80 lg:size-96 bg-cyan-500 opacity-20 blur-[100px] pointer-events-none" />
 
-      <div className="relative z-10 w-full h-full max-w-7xl mx-auto p-2 sm:p-4">
+      <div className="relative z-10 w-full h-full max-w-7xl mx-auto p-7 sm:p-4">
         <Routes>
           <Route
             path="/"

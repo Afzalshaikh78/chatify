@@ -37,10 +37,11 @@ function ChatContainer() {
   }, [messages]);
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="h-full flex flex-col min-h-0">
       <ChatHeader />
 
-      <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4">
+      {/* Messages Area - Flexible height but constrained */}
+      <div className="flex-1 min-h-0 overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4">
         {messages.length > 0 && !isMessagesLoading ? (
           <>
             {messages.map((msg) => (
@@ -51,7 +52,7 @@ function ChatContainer() {
                 }`}
               >
                 <div
-                  className={`chat-bubble relative max-w-[80%] sm:max-w-[70%] text-sm ${
+                  className={`chat-bubble relative max-w-[85%] sm:max-w-[70%] text-sm break-words ${
                     msg.senderId === authUser._id
                       ? "bg-cyan-600 text-white"
                       : "bg-slate-800 text-slate-200"
@@ -64,7 +65,11 @@ function ChatContainer() {
                       className="w-full max-w-xs rounded-lg mb-2"
                     />
                   )}
-                  {msg.text && <p className="break-words">{msg.text}</p>}
+                  {msg.text && (
+                    <p className="break-words whitespace-pre-wrap">
+                      {msg.text}
+                    </p>
+                  )}
                 </div>
                 <div className="chat-footer opacity-50 text-xs mt-1">
                   {new Date(msg.createdAt).toLocaleTimeString(undefined, {
@@ -84,7 +89,10 @@ function ChatContainer() {
         )}
       </div>
 
-      <MessageInput />
+      {/* Message Input - Always visible */}
+      <div className="flex-shrink-0">
+        <MessageInput />
+      </div>
     </div>
   );
 }
